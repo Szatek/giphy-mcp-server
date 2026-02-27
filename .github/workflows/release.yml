@@ -48,7 +48,7 @@ jobs:
           # Install dev dependencies so all relevant project packages are present in environment
           python -m pip install -e ".[dev]"
           # Generate cycloneDX BOM for the environment
-          cyclonedx-py environment --outfile bom.json
+          cyclonedx-py environment -o bom.json
 
       - name: Commit version bump and tag
         run: |
