@@ -1,0 +1,73 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump level (e.g., patch, minor, major) applied via hatch.'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install hatch and dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install hatch cyclonedx-bom
+
+      - name: Bump Version
+        id: bump
+        run: |
+          hatch version ${{ github.event.inputs.version_bump }}
+          NEW_VERSION=$(hatch version)
+          echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+          echo "Bumping version to $NEW_VERSION"
+
+      - name: Generate BOM (Bill of Materials)
+        run: |
+          # Install dev dependencies so all relevant project packages are present in environment
+          python -m pip install -e ".[dev]"
+          # Generate cycloneDX BOM for the environment
+          cyclonedx-py environment --outfile bom.json
+
+      - name: Commit version bump and tag
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml
+          git commit -m "chore: bump version to ${{ env.NEW_VERSION }}"
+          git tag -a "v${{ env.NEW_VERSION }}" -m "Release v${{ env.NEW_VERSION }}"
+          
+          # Push the commit to the current branch (e.g. main)
+          git push origin HEAD
+          # Push the tag
+          git push origin "v${{ env.NEW_VERSION }}"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ env.NEW_VERSION }}" \
+            --title "Release v${{ env.NEW_VERSION }}" \
+            --generate-notes \
+            bom.json
