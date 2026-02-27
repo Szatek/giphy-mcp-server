@@ -65,9 +65,13 @@ jobs:
 
       - name: Create GitHub Release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # IMPORTANT: By default GITHUB_TOKEN won't trigger other workflows like `publish.yml`
+          # If you want it to trigger automatically, replace GITHUB_TOKEN with a Personal Access Token (PAT)
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
+          # The command natively creates a 'published' release unless --draft is passed
           gh release create "v${{ env.NEW_VERSION }}" \
             --title "Release v${{ env.NEW_VERSION }}" \
             --generate-notes \
+            --verify-tag \
             bom.json
