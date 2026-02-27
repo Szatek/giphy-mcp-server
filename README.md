@@ -1,6 +1,6 @@
 # Giphy MCP Server
 
-[![CI](https://github.com/TODO_OWNER/giphy-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/TODO_OWNER/giphy-mcp-server/actions/workflows/ci.yml)
+[![CI](https://github.com/Szatek/giphy-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/Szatek/giphy-mcp-server/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/giphy-mcp.svg)](https://badge.fury.io/py/giphy-mcp)
 
 An MCP (Model Context Protocol) server that allows AI agents to search and retrieve GIFs using the Giphy API. This provides a rich way for agents to express humor, reactions, or find relevant visual context.
@@ -20,7 +20,7 @@ pip install giphy-mcp
 For development:
 1. Clone the repository:
    ```bash
-   git clone https://github.com/TODO_OWNER/giphy-mcp-server.git
+   git clone https://github.com/Szatek/giphy-mcp-server.git
    cd giphy-mcp-server
    ```
 2. Create a virtual environment and install in editable mode:

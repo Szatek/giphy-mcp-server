@@ -50,11 +50,19 @@ async def search_gifs(query: str, limit: int = 5, rating: str = "g") -> str:
             result_lines = [f"Found {len(gifs)} GIFs for '{query}':\n"]
             for index, gif in enumerate(gifs, start=1):
                 title = gif.get("title", "Untitled GIF")
-                url = gif.get("url", "")
-                embed_url = gif.get("embed_url", "")
-                result_lines.append(f"{index}. Title: {title}")
-                result_lines.append(f"   URL: {url}")
-                result_lines.append(f"   Embed URL: {embed_url}\n")
+                
+                # Get the direct image URL using images.original.url or fallback to empty string
+                images = gif.get("images", {})
+                original = images.get("original", {})
+                image_url = original.get("url", "")
+                
+                result_lines.append(f"### {index}. {title}")
+                if image_url:
+                    result_lines.append(f"![{title}]({image_url})\n")
+                else:
+                    # Fallback if image_url is missing
+                    url = gif.get("url", "")
+                    result_lines.append(f"[Link to Giphy]({url})\n")
                 
             return "\n".join(result_lines)
             
