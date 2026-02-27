@@ -74,7 +74,8 @@ When this server is registered with an AI agent (like Claude Desktop or Cursor),
 ```
 
 **Agent (Response)**: "Woohoo! That's awesome news! Here's a celebratory GIF to match the mood:
-https://giphy.com/embed/artj92V8o75VPL7AeQ"
+
+![celebratory GIF](https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif)"
 
 ## Using with MCP Clients
 
