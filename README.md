@@ -77,7 +77,31 @@ When this server is registered with an AI agent (like Claude Desktop or Cursor),
 
 ![celebratory GIF](https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif)"
 
-## Using with MCP Clients
+## Antigravity AI Agent Integration & Skills
+
+This repository includes custom Agent Skills located in the `.agents/skills` directory designed for the Antigravity AI framework (or other compatible systems). 
+
+### Included Skills
+- **Giphy Chat Enhancer**: Instructs your AI agent to embed an appropriate GIF during special conversational events (successes, errors, debugging milestones), injecting a fun, nerdy communication style into your interactions.
+- **Giphy Documentation Enhancer**: Instructs the agent to proactively embed tasteful Giphy images when generating or updating `README.md` files and user documentation.
+
+### Auto-Installation
+The skills are written with internal logic that instructs the AI agent to recognize if it lacks the `search_gifs` tool. If the tool is missing, the agent will autonomously:
+1. Run `pip install giphy-mcp`
+2. Configure itself securely by modifying its `$HOME/.gemini/antigravity/mcp_config.json` configuration file, adding the following snippet:
+```json
+"mcpServers": {
+  "giphy": {
+    "command": "giphy-mcp",
+    "args": [],
+    "env": {
+      "GIPHY_API_KEY": "your_api_key_here"
+    }
+  }
+}
+```
+
+## Using with built-in MCP Clients
 
 To use this with an MCP client like Claude Desktop, add the following to your `claude_desktop_config.json`:
 
