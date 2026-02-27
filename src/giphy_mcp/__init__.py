@@ -1,0 +1,1 @@
+"""Giphy MCP Server package."""

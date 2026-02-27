@@ -1,5 +1,8 @@
 # Giphy MCP Server
 
+[![CI](https://github.com/TODO_OWNER/giphy-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/TODO_OWNER/giphy-mcp-server/actions/workflows/ci.yml)
+[![PyPI version](https://badge.fury.io/py/giphy-mcp.svg)](https://badge.fury.io/py/giphy-mcp)
+
 An MCP (Model Context Protocol) server that allows AI agents to search and retrieve GIFs using the Giphy API. This provides a rich way for agents to express humor, reactions, or find relevant visual context.
 
 ## Prerequisites
@@ -9,12 +12,18 @@ An MCP (Model Context Protocol) server that allows AI agents to search and retri
 
 ## Installation
 
-1. Clone or navigate to the repository:
+For general use, install the package via pip:
+```bash
+pip install giphy-mcp
+```
+
+For development:
+1. Clone the repository:
    ```bash
+   git clone https://github.com/TODO_OWNER/giphy-mcp-server.git
    cd giphy-mcp-server
    ```
-
-2. Create a virtual environment and install dependencies:
+2. Create a virtual environment and install in editable mode:
    ```bash
    python -m venv venv
    # On Windows
@@ -22,7 +31,7 @@ An MCP (Model Context Protocol) server that allows AI agents to search and retri
    # On Linux/macOS
    source venv/bin/activate
    
-   pip install -r requirements.txt
+   pip install -e ".[dev]"
    ```
 
 ## Configuration
@@ -75,10 +84,8 @@ To use this with an MCP client like Claude Desktop, add the following to your `c
 {
   "mcpServers": {
     "giphy": {
-      "command": "path/to/giphy-mcp-server/venv/Scripts/python.exe",
-      "args": [
-        "path/to/giphy-mcp-server/giphy-mcp.py"
-      ],
+      "command": "giphy-mcp",
+      "args": [],
       "env": {
         "GIPHY_API_KEY": "your_api_key_here"
       }
@@ -87,4 +94,4 @@ To use this with an MCP client like Claude Desktop, add the following to your `c
 }
 ```
 
-*Note: Replace the python executable path and the giphy-mcp.py path with the absolute paths on your system.*
+*Note: You may need to specify the absolute path to the `giphy-mcp` executable if it's not in your system's PATH.*

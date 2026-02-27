@@ -9,9 +9,13 @@ async def run_demo_agent():
     
     print("[Agent]: Starting up and connecting to the Giphy MCP Server...")
     
+    import os
+    # Use absolute path to the venv executable for local testing
+    executable_path = os.path.join(os.getcwd(), "venv", "Scripts", "giphy-mcp.exe")
+
     server_params = StdioServerParameters(
-        command=".\\venv\\Scripts\\python.exe",
-        args=["giphy-mcp.py"],
+        command=executable_path,
+        args=[],
     )
 
     # Connect to the server using standard input/output

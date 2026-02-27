@@ -12,10 +12,6 @@ mcp = FastMCP("Giphy Search")
 
 # Giphy API endpoint
 GIPHY_API_URL = "https://api.giphy.com/v1/gifs/search"
-GIPHY_API_KEY = os.getenv("GIPHY_API_KEY")
-
-if not GIPHY_API_KEY:
-    raise ValueError("GIPHY_API_KEY environment variable is not set. Please set it in your .env file.")
 
 @mcp.tool()
 async def search_gifs(query: str, limit: int = 5, rating: str = "g") -> str:
@@ -29,9 +25,12 @@ async def search_gifs(query: str, limit: int = 5, rating: str = "g") -> str:
     Returns:
         A formatted string describing the GIFs found with their URLs.
     """
-    
+    api_key = os.getenv("GIPHY_API_KEY")
+    if not api_key:
+        return "Error: GIPHY_API_KEY environment variable is not set. Please set it in your .env file."
+
     params = {
-        "api_key": GIPHY_API_KEY,
+        "api_key": api_key,
         "q": query,
         "limit": limit,
         "rating": rating
@@ -66,5 +65,9 @@ async def search_gifs(query: str, limit: int = 5, rating: str = "g") -> str:
         except Exception as e:
             return f"An unexpected error occurred: {e}"
 
-if __name__ == "__main__":
+def main():
+    """Run the Giphy MCP server."""
     mcp.run(transport='stdio')
+
+if __name__ == "__main__":
+    main()
