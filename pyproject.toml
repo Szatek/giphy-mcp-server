@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "giphy-mcp"
-version = "0.1.0"
+dynamic = ["version"]
 description = "An MCP server for integrating Giphy into AI agents."
 readme = "README.md"
 authors = [
@@ -35,6 +35,9 @@ giphy-mcp = "giphy_mcp.server:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/giphy_mcp"]
+
+[tool.hatch.version]
+path = "src/giphy_mcp/__about__.py"
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
