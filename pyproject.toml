@@ -22,16 +22,17 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 
-[project.urls]
-Homepage = "https://github.com/Szatek/giphy-mcp-server"
-Repository = "https://github.com/Szatek/giphy-mcp-server"
-Issues = "https://github.com/Szatek/giphy-mcp-server/issues"
 requires-python = ">=3.10"
 dependencies = [
     "mcp>=1.0.0",
     "python-dotenv>=1.0.0",
     "httpx>=0.24.0"
 ]
+
+[project.urls]
+Homepage = "https://github.com/Szatek/giphy-mcp-server"
+Repository = "https://github.com/Szatek/giphy-mcp-server"
+Issues = "https://github.com/Szatek/giphy-mcp-server/issues"
 
 [project.optional-dependencies]
 dev = [
