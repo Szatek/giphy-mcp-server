@@ -32,7 +32,7 @@ If you ever find that the `mcp_giphy_search_gifs` tool is unavailable in your en
    ```json
    "giphy": {
      "command": "giphy-mcp",
-     "args": [],
+     "args": ["run"],
      "env": {
        "GIPHY_API_KEY": "<USER_API_KEY>"
      }

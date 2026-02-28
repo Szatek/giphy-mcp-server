@@ -12,6 +12,16 @@ on:
           - patch
           - minor
           - major
+      release_title:
+        description: 'Detailed Title for the Release'
+        required: true
+        default: 'Feature Update & Fixes'
+        type: string
+      release_description:
+        description: 'Detailed Description explaining the purpose or highlights of this release.'
+        required: true
+        default: 'This release introduces new enhancements and fixes.'
+        type: string
 
 permissions:
   contents: write
@@ -63,15 +73,42 @@ jobs:
           # Push the tag
           git push origin "v${{ env.NEW_VERSION }}"
 
+      - name: Generate Release Notes
+        run: |
+          # Find the previous tag to get the diff. If no previous tag, get all commits.
+          # We search for tags matching v* to avoid pulling random non-release tags.
+          # We use `--abbrev=0` on the commit BEFORE our new tag.
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+          echo "Previous tag: $PREV_TAG"
+          
+          if [ -z "$PREV_TAG" ]; then
+            LOG_RANGE="HEAD"
+          else
+            LOG_RANGE="${PREV_TAG}..HEAD"
+          fi
+          
+          echo "# 🚀 Release: ${{ github.event.inputs.release_title }}" > notes.md
+          echo "## 📝 Description" >> notes.md
+          echo "${{ github.event.inputs.release_description }}" >> notes.md
+          echo "" >> notes.md
+          
+          echo "## 👥 Contributors" >> notes.md
+          git log $LOG_RANGE --format="* %an" | sort -u >> notes.md
+          echo "" >> notes.md
+          
+          echo "## 🔄 Accepted Commits" >> notes.md
+          git log $LOG_RANGE --pretty=format:"* \`%h\` - %s (%an)" >> notes.md
+          
+          cat notes.md
+
       - name: Create GitHub Release
         env:
           # IMPORTANT: By default GITHUB_TOKEN won't trigger other workflows like `publish.yml`
           # If you want it to trigger automatically, replace GITHUB_TOKEN with a Personal Access Token (PAT)
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          # The command natively creates a 'published' release unless --draft is passed
           gh release create "v${{ env.NEW_VERSION }}" \
-            --title "Release v${{ env.NEW_VERSION }}" \
-            --generate-notes \
+            --title "v${{ env.NEW_VERSION }}: ${{ github.event.inputs.release_title }}" \
+            --notes-file notes.md \
             --verify-tag \
             bom.json

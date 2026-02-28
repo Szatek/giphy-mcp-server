@@ -15,7 +15,7 @@ async def run_demo_agent():
 
     server_params = StdioServerParameters(
         command=executable_path,
-        args=[],
+        args=["run"],
     )
 
     # Connect to the server using standard input/output

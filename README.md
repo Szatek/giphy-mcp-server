@@ -5,6 +5,8 @@
 
 An MCP (Model Context Protocol) server that allows AI agents to search and retrieve GIFs using the Giphy API. This provides a rich way for agents to express humor, reactions, or find relevant visual context.
 
+![Magic Documentation Book](https://media4.giphy.com/media/v1.Y2lkPWNmMTczNWU2MzZjaTI5ODVvMnc5cDdpYTZ1emd0OTA2em4xb2N0bG5rNzVkNHc5NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Jls16O6RdqyxueMvBj/giphy.gif)
+
 ## Prerequisites
 
 - Python 3.10+
@@ -33,6 +35,20 @@ For development:
    
    pip install -e ".[dev]"
    ```
+
+## Usage
+
+The Giphy MCP Server is designed to be run as a standard IO transport process, which AI agents and MCP clients can spawn.
+
+To start the server:
+```bash
+giphy-mcp run
+```
+
+To see the help menu and configuration options:
+```bash
+giphy-mcp help
+```
 
 ## Configuration
 
@@ -93,7 +109,7 @@ The skills are written with internal logic that instructs the AI agent to recogn
 "mcpServers": {
   "giphy": {
     "command": "giphy-mcp",
-    "args": [],
+    "args": ["run"],
     "env": {
       "GIPHY_API_KEY": "your_api_key_here"
     }
@@ -110,7 +126,7 @@ To use this with an MCP client like Claude Desktop, add the following to your `c
   "mcpServers": {
     "giphy": {
       "command": "giphy-mcp",
-      "args": [],
+      "args": ["run"],
       "env": {
         "GIPHY_API_KEY": "your_api_key_here"
       }

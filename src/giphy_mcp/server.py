@@ -65,9 +65,33 @@ async def search_gifs(query: str, limit: int = 5, rating: str = "g") -> str:
         except Exception as e:
             return f"An unexpected error occurred: {e}"
 
+import sys
+
 def main():
-    """Run the Giphy MCP server."""
-    mcp.run(transport='stdio')
+    """Run the Giphy MCP server or display help."""
+    if len(sys.argv) == 1 or sys.argv[1] in ["help", "--help"]:
+        print("========================================")
+        print("          Giphy MCP Server              ")
+        print("========================================")
+        print("Usage:")
+        print("  giphy-mcp run      - Run the MCP server on stdio (for agent tool integration)")
+        print("  giphy-mcp help     - Show this help message")
+        print("\nTo use with Antigravity, add this to your mcp_config.json:")
+        print('  "giphy": {')
+        print('    "command": "giphy-mcp",')
+        print('    "args": ["run"],')
+        print('    "env": {')
+        print('      "GIPHY_API_KEY": "<your_api_key>"')
+        print('    }')
+        print('  }')
+        sys.exit(0)
+    
+    if sys.argv[1] == "run":
+        mcp.run(transport='stdio')
+    else:
+        print(f"Unknown argument: {sys.argv[1]}")
+        print("Use 'giphy-mcp help' for usage instructions.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

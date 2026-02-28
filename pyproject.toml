@@ -5,17 +5,27 @@ build-backend = "hatchling.build"
 [project]
 name = "giphy-mcp"
 dynamic = ["version"]
-description = "An MCP server for integrating Giphy into AI agents."
+description = "A Model Context Protocol (MCP) server that empowers AI agents to search and retrieve lively GIFs from Giphy, enhancing chat and documentation experiences."
 readme = "README.md"
+keywords = ["mcp", "giphy", "ai", "agents", "chat", "gifs", "modelcontextprotocol","GIF"]
 authors = [
     { name = "Contributors", email = "contributors@example.com" }
 ]
 license = { text = "MIT" }
 classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Topic :: Communications :: Chat",
+    "Topic :: Software Development :: Libraries :: Python Modules"
 ]
+
+[project.urls]
+Homepage = "https://github.com/Szatek/giphy-mcp-server"
+Repository = "https://github.com/Szatek/giphy-mcp-server"
+Issues = "https://github.com/Szatek/giphy-mcp-server/issues"
 requires-python = ">=3.10"
 dependencies = [
     "mcp>=1.0.0",
